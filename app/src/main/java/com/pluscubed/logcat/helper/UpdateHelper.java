@@ -88,7 +88,7 @@ public class UpdateHelper {
 
                 boolean isJellyBean = VersionHelper.getVersionSdkIntCompat() >= VersionHelper.VERSION_JELLYBEAN;
 
-                return isJellyBean && !PreferenceHelper.getJellybeanRootRan(context);
+                return isJellyBean && PreferenceHelper.getJellybeanRootRan(context);
             }
         }, new Callback<Context>() {
 

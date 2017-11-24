@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import com.pluscubed.logcat.data.ColorScheme;
 import com.pluscubed.logcat.util.StringUtil;
 import com.pluscubed.logcat.util.UtilLogger;
-import com.pluscubed.logcat.widget.MultipleChoicePreference;
 
 import org.omnirom.logcat.R;
 
@@ -44,7 +43,7 @@ public class PreferenceHelper {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = sharedPrefs.edit();
         editor.putBoolean(context.getString(R.string.pref_ran_jellybean_su_update), true);
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -55,7 +54,7 @@ public class PreferenceHelper {
      */
     public static boolean getJellybeanRootRan(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getBoolean(context.getString(R.string.pref_ran_jellybean_su_update), false);
+        return !sharedPrefs.getBoolean(context.getString(R.string.pref_ran_jellybean_su_update), false);
     }
 
     public static boolean getWidgetExistsPreference(Context context, int appWidgetId) {
@@ -77,7 +76,7 @@ public class PreferenceHelper {
             editor.putBoolean(widgetExists, true);
         }
 
-        editor.commit();
+        editor.apply();
 
 
     }
@@ -122,7 +121,7 @@ public class PreferenceHelper {
 
         editor.putString(context.getText(R.string.pref_display_limit).toString(), Integer.toString(value));
 
-        editor.commit();
+        editor.apply();
     }
 
     public static void setLogLinePeriodPreference(Context context, int value) {
@@ -131,7 +130,7 @@ public class PreferenceHelper {
 
         editor.putString(context.getText(R.string.pref_log_line_period).toString(), Integer.toString(value));
 
-        editor.commit();
+        editor.apply();
     }
 
     public static char getDefaultLogLevelPreference(Context context) {
@@ -207,12 +206,12 @@ public class PreferenceHelper {
                 context.getText(R.string.pref_hide_partial_select_help).toString(), false);
     }
 
-    public static void setHidePartialSelectHelpPreference(Context context, boolean bool) {
+    public static void setHidePartialSelectHelpPreference(Context context) {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = sharedPrefs.edit();
 
-        editor.putBoolean(context.getString(R.string.pref_hide_partial_select_help), bool);
+        editor.putBoolean(context.getString(R.string.pref_hide_partial_select_help), true);
 
         editor.apply();
 
@@ -260,7 +259,7 @@ public class PreferenceHelper {
 
         String value = sharedPrefs.getString(key, defaultValue);
 
-        return Arrays.asList(StringUtil.split(value, MultipleChoicePreference.DELIMITER));
+        return Arrays.asList(StringUtil.split(value));
     }
 
     public static List<String> getBufferNames(Context context) {

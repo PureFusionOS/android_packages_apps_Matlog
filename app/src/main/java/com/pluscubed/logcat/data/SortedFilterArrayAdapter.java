@@ -113,7 +113,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
      * @param textViewResourceId The resource ID for a layout file containing a TextView to use when
      *                           instantiating views.
      */
-    public SortedFilterArrayAdapter(Context context, int textViewResourceId) {
+    private SortedFilterArrayAdapter(Context context, int textViewResourceId) {
         init(context, textViewResourceId, 0, new ArrayList<T>());
     }
 
@@ -125,7 +125,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
      *                           instantiating views.
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      */
-    public SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId) {
+    private SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId) {
         init(context, resource, textViewResourceId, new ArrayList<T>());
     }
 
@@ -137,7 +137,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
      *                           instantiating views.
      * @param objects            The objects to represent in the ListView.
      */
-    public SortedFilterArrayAdapter(Context context, int textViewResourceId, T[] objects) {
+    private SortedFilterArrayAdapter(Context context, int textViewResourceId, T[] objects) {
         init(context, textViewResourceId, 0, Arrays.asList(objects));
     }
 
@@ -150,20 +150,17 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      * @param objects            The objects to represent in the ListView.
      */
-    public SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId, T[] objects) {
+    private SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId, T[] objects) {
         init(context, resource, textViewResourceId, Arrays.asList(objects));
     }
 
     /**
      * Constructor
-     *
-     * @param context            The current context.
-     * @param textViewResourceId The resource ID for a layout file containing a TextView to use when
-     *                           instantiating views.
+     *  @param context            The current context.
      * @param objects            The objects to represent in the ListView.
      */
-    public SortedFilterArrayAdapter(Context context, int textViewResourceId, List<T> objects) {
-        init(context, textViewResourceId, 0, objects);
+    public SortedFilterArrayAdapter(Context context, List<T> objects) {
+        init(context, org.omnirom.logcat.R.layout.list_item_dropdown, 0, objects);
     }
 
     /**
@@ -175,7 +172,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      * @param objects            The objects to represent in the ListView.
      */
-    public SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId, List<T> objects) {
+    private SortedFilterArrayAdapter(Context context, int resource, int textViewResourceId, List<T> objects) {
         init(context, resource, textViewResourceId, objects);
     }
 
@@ -191,7 +188,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
     public static ArrayAdapter<CharSequence> createFromResource(Context context,
                                                                 int textArrayResId, int textViewResId) {
         CharSequence[] strings = context.getResources().getTextArray(textArrayResId);
-        return new ArrayAdapter<CharSequence>(context, textViewResId, strings);
+        return new ArrayAdapter<>(context, textViewResId, strings);
     }
 
     /**
@@ -362,7 +359,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
                 text = (TextView) view.findViewById(mFieldId);
             }
         } catch (ClassCastException e) {
-            log.e("You must supply a resource ID for a TextView");
+            log.e();
             throw new IllegalStateException(
                     "ArrayAdapter requires the resource ID to be a TextView", e);
         }
@@ -412,13 +409,13 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
 
             if (mOriginalValues == null) {
                 synchronized (mLock) {
-                    mOriginalValues = new ArrayList<T>(mObjects);
+                    mOriginalValues = new ArrayList<>(mObjects);
                 }
             }
 
             if (prefix == null || prefix.length() == 0) {
                 synchronized (mLock) {
-                    ArrayList<T> list = new ArrayList<T>(mOriginalValues);
+                    ArrayList<T> list = new ArrayList<>(mOriginalValues);
                     Collections.sort(list, stringComparator);
                     results.values = list;
                     results.count = list.size();
@@ -429,7 +426,7 @@ public class SortedFilterArrayAdapter<T> extends BaseAdapter implements Filterab
                 final ArrayList<T> values = mOriginalValues;
                 final int count = values.size();
 
-                final ArrayList<T> newValues = new ArrayList<T>(count);
+                final ArrayList<T> newValues = new ArrayList<>(count);
 
                 for (int i = 0; i < count; i++) {
                     final T value = values.get(i);

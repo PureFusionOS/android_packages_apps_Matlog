@@ -89,8 +89,8 @@ public class DialogHelper {
         final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) filterView.findViewById(android.R.id.text1);
         autoCompleteTextView.setText(queryFilterText);
 
-        SortedFilterArrayAdapter<String> suggestionAdapter = new SortedFilterArrayAdapter<String>(
-                context, R.layout.list_item_dropdown, filterQuerySuggestions);
+        SortedFilterArrayAdapter<String> suggestionAdapter = new SortedFilterArrayAdapter<>(
+                context, filterQuerySuggestions);
         autoCompleteTextView.setAdapter(suggestionAdapter);
 
         // set values on spinner to be the log levels
@@ -139,11 +139,11 @@ public class DialogHelper {
 
 
     public static void showFilenameSuggestingDialog(final Context context,
-                                                    final MaterialDialog.SingleButtonCallback callback, final MaterialDialog.InputCallback inputCallback, int titleResId) {
+                                                    final MaterialDialog.SingleButtonCallback callback, final MaterialDialog.InputCallback inputCallback) {
 
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
-        builder.title(titleResId)
+        builder.title(R.string.save_log)
                 .negativeText(android.R.string.cancel)
                 .positiveText(android.R.string.ok)
                 .content(R.string.enter_filename)

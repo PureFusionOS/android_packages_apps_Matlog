@@ -1,9 +1,8 @@
 <resources>
 
     <style name="Theme.MatLog" parent="Base.Theme.MatLog">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="toolbarShadow">@drawable/shadow</item>
-    </style>
+        @null
+        @null</style>
 
     <style name="Base.Theme.MatLog" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>

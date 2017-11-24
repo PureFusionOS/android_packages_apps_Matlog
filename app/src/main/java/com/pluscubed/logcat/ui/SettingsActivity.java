@@ -299,9 +299,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         private void setBufferPreferenceSummary(String value) {
 
-            String[] commaSeparated = StringUtil.split(StringUtil.nullToEmpty(value), MultipleChoicePreference.DELIMITER);
+            String[] commaSeparated = StringUtil.split(StringUtil.nullToEmpty(value));
 
-            List<CharSequence> checkedEntries = new ArrayList<CharSequence>();
+            List<CharSequence> checkedEntries = new ArrayList<>();
 
             for (String entryValue : commaSeparated) {
                 int idx = ArrayUtil.indexOf(bufferPreference.getEntryValues(), entryValue);

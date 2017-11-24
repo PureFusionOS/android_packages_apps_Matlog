@@ -71,10 +71,7 @@ public class SearchCriteria {
         if (!checkFoundPid(logLine)) {
             return false;
         }
-        if (!checkFoundTag(logLine)) {
-            return false;
-        }
-        return checkFoundText(logLine);
+        return checkFoundTag(logLine) && checkFoundText(logLine);
     }
 
     private boolean checkFoundText(LogLine logLine) {

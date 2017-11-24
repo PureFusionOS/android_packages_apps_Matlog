@@ -54,7 +54,7 @@ public class ServiceHelper {
             intent.putExtra(LogcatRecordingService.EXTRA_FILENAME, filename);
 
             // load "lastLine" in the background
-            LogcatReaderLoader loader = LogcatReaderLoader.create(context, true);
+            LogcatReaderLoader loader = LogcatReaderLoader.create(context);
             intent.putExtra(LogcatRecordingService.EXTRA_LOADER, loader);
 
             // add query text and log level

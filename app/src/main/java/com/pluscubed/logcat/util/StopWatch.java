@@ -5,9 +5,9 @@ public class StopWatch {
     private long startTime;
     private String name;
 
-    public StopWatch(String name) {
+    public StopWatch() {
         if (UtilLogger.DEBUG_MODE) {
-            this.name = name;
+            this.name = "removeFirst()";
             this.startTime = System.currentTimeMillis();
         }
     }

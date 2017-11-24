@@ -143,7 +143,7 @@ public class LogLine {
         return logLevel;
     }
 
-    public void setLogLevel(int logLevel) {
+    private void setLogLevel(int logLevel) {
         this.logLevel = logLevel;
     }
 
@@ -151,7 +151,7 @@ public class LogLine {
         return tag;
     }
 
-    public void setTag(String tag) {
+    private void setTag(String tag) {
         this.tag = tag;
     }
 
@@ -159,7 +159,7 @@ public class LogLine {
         return logOutput;
     }
 
-    public void setLogOutput(String logOutput) {
+    private void setLogOutput(String logOutput) {
         if (isScrubberEnabled) {
             this.logOutput = ScrubberUtils.scrubLine(logOutput);
         } else {
@@ -171,7 +171,7 @@ public class LogLine {
         return processId;
     }
 
-    public void setProcessId(int processId) {
+    private void setProcessId(int processId) {
         this.processId = processId;
     }
 
@@ -179,7 +179,7 @@ public class LogLine {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    private void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

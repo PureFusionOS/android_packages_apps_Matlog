@@ -11,7 +11,7 @@ import java.util.List;
 
 public class LogcatHelper {
 
-    public static final String BUFFER_MAIN = "main";
+    private static final String BUFFER_MAIN = "main";
     public static final String BUFFER_EVENTS = "events";
     public static final String BUFFER_RADIO = "radio";
 
@@ -20,13 +20,12 @@ public class LogcatHelper {
     public static Process getLogcatProcess(String buffer) throws IOException {
 
         List<String> args = getLogcatArgs(buffer);
-        Process process = RuntimeHelper.exec(args);
 
-        return process;
+        return RuntimeHelper.exec(args);
     }
 
     private static List<String> getLogcatArgs(String buffer) {
-        List<String> args = new ArrayList<String>(Arrays.asList("logcat", "-v", "time"));
+        List<String> args = new ArrayList<>(Arrays.asList("logcat", "-v", "time"));
 
         // for some reason, adding -b main excludes log output from AndroidRuntime runtime exceptions,
         // whereas just leaving it blank keeps them in.  So do not specify the buffer if it is "main"

@@ -24,7 +24,7 @@ public class RuntimeHelper {
     public static Process exec(List<String> args) throws IOException {
         // since JellyBean, sudo is required to read other apps' logs
         if (VersionHelper.getVersionSdkIntCompat() >= VersionHelper.VERSION_JELLYBEAN
-                && !SuperUserHelper.isFailedToObtainRoot()) {
+                && SuperUserHelper.isFailedToObtainRoot()) {
             Process process = Runtime.getRuntime().exec("su");
 
             PrintStream outputStream = null;
@@ -47,7 +47,7 @@ public class RuntimeHelper {
         // if we're in JellyBean, then we need to kill the process as root, which requires all this
         // extra UnixProcess logic
         if (VersionHelper.getVersionSdkIntCompat() >= VersionHelper.VERSION_JELLYBEAN
-                && !SuperUserHelper.isFailedToObtainRoot()) {
+                && SuperUserHelper.isFailedToObtainRoot()) {
             SuperUserHelper.destroy(process);
         } else {
             process.destroy();

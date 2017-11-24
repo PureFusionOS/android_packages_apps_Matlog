@@ -85,7 +85,7 @@ public class SaveLogHelper {
         if (!result) {
             Toast.makeText(context, R.string.sd_card_not_found, Toast.LENGTH_LONG).show();
         }
-        return result;
+        return !result;
     }
 
     public static boolean checkIfSdCardExists() {
@@ -100,9 +100,7 @@ public class SaveLogHelper {
 
         File catlogDir = getSavedLogsDirectory();
 
-        File file = new File(catlogDir, filename);
-
-        return file;
+        return new File(catlogDir, filename);
     }
 
     public static void deleteLogIfExists(String filename) {
@@ -127,7 +125,7 @@ public class SaveLogHelper {
             return new Date(file.lastModified());
         } else {
             // shouldn't happen
-            log.e("file last modified date not found: %s", filename);
+            log.e(filename);
             return new Date();
         }
     }
@@ -147,7 +145,7 @@ public class SaveLogHelper {
             return Collections.emptyList();
         }
 
-        List<File> files = new ArrayList<File>(Arrays.asList(filesArray));
+        List<File> files = new ArrayList<>(Arrays.asList(filesArray));
 
         Collections.sort(files, new Comparator<File>() {
 
@@ -157,7 +155,7 @@ public class SaveLogHelper {
             }
         });
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         for (File file : files) {
             result.add(file.getName());
@@ -172,7 +170,7 @@ public class SaveLogHelper {
         File catlogDir = getSavedLogsDirectory();
         File logFile = new File(catlogDir, filename);
 
-        LinkedList<String> logLines = new LinkedList<String>();
+        LinkedList<String> logLines = new LinkedList<>();
         boolean truncated = false;
 
         BufferedReader bufferedReader = null;
@@ -254,7 +252,7 @@ public class SaveLogHelper {
 
     }
 
-    public static File getTempDirectory() {
+    private static File getTempDirectory() {
         File catlogDir = getCatlogDirectory();
 
         File tmpDir = new File(catlogDir, TMP_DIR);
@@ -389,8 +387,8 @@ public class SaveLogHelper {
         return total;
     }
 
-    public static String createLogFilename(boolean withDate) {
-        if (withDate) {
+    public static String createLogFilename() {
+        if (true) {
             Date date = new Date();
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTime(date);

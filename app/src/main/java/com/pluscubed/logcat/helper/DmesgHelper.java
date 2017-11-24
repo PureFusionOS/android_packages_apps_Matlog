@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DmesgHelper {
@@ -14,15 +15,14 @@ public class DmesgHelper {
     private static UtilLogger log = new UtilLogger(DmesgHelper.class);
 
     private static List<String> getDmesgArgs() {
-        List<String> args = new ArrayList<String>(Arrays.asList("dmesg"));
 
-        return args;
+        return new ArrayList<>(Collections.singletonList("dmesg"));
     }
 
     public static List<CharSequence> getDmsg() {
         Process dmesgProcess = null;
         BufferedReader reader = null;
-        List<CharSequence> lines = new ArrayList<CharSequence>();
+        List<CharSequence> lines = new ArrayList<>();
         try {
 
             List<String> args = getDmesgArgs();

@@ -38,7 +38,7 @@ import java.util.Random;
  */
 public class LogcatRecordingService extends IntentService {
 
-    public static final String URI_SCHEME = "catlog_recording_service";
+    private static final String URI_SCHEME = "catlog_recording_service";
     public static final String EXTRA_FILENAME = "filename";
     public static final String EXTRA_LOADER = "loader";
     public static final String EXTRA_QUERY_FILTER = "filter";
@@ -87,7 +87,7 @@ public class LogcatRecordingService extends IntentService {
             LogcatReaderLoader loader = intent.getParcelableExtra(EXTRA_LOADER);
             mReader = loader.loadReader();
 
-            while (!mReader.readyToRecord() && !mKilled) {
+            while (mReader.readyToRecord() && !mKilled) {
                 mReader.readLine();
                 // keep skipping lines until we find one that is past the last log line, i.e.
                 // it's ready to record

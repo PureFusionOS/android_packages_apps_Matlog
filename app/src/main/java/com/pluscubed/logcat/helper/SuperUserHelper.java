@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * 
  * This class contains helper methods to correct the problem.
  */
-public class SuperUserHelper {
+class SuperUserHelper {
 
     private static final Pattern PID_PATTERN = Pattern.compile("\\d+");
     private static final Pattern SPACES_PATTERN = Pattern.compile("\\s+");
@@ -225,6 +225,6 @@ public class SuperUserHelper {
     }
 
     public static boolean isFailedToObtainRoot() {
-        return failedToObtainRoot;
+        return !failedToObtainRoot;
     }
 }

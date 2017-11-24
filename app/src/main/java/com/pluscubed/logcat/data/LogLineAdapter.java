@@ -159,7 +159,7 @@ public class LogLineAdapter extends RecyclerView.Adapter<LogLineViewHolder> impl
     }
 
     public void removeFirst(int n) {
-        StopWatch stopWatch = new StopWatch("removeFirst()");
+        StopWatch stopWatch = new StopWatch();
         if (mOriginalValues != null) {
             synchronized (mLock) {
                 List<LogLine> subList = mOriginalValues.subList(n, mOriginalValues.size());
@@ -369,11 +369,11 @@ public class LogLineAdapter extends RecyclerView.Adapter<LogLineViewHolder> impl
             SearchCriteria searchCriteria = new SearchCriteria(query);
 
             // search by log level
-            ArrayList<LogLine> allValues = new ArrayList<LogLine>();
+            ArrayList<LogLine> allValues = new ArrayList<>();
 
             ArrayList<LogLine> logLines;
             synchronized (mLock) {
-                logLines = new ArrayList<LogLine>(inputList);
+                logLines = new ArrayList<>(inputList);
             }
 
             for (LogLine logLine : logLines) {
@@ -387,13 +387,12 @@ public class LogLineAdapter extends RecyclerView.Adapter<LogLineViewHolder> impl
             // search by criteria
             if (!searchCriteria.isEmpty()) {
 
-                final ArrayList<LogLine> values = allValues;
-                final int count = values.size();
+                final int count = allValues.size();
 
-                final ArrayList<LogLine> newValues = new ArrayList<LogLine>(count);
+                final ArrayList<LogLine> newValues = new ArrayList<>(count);
 
                 for (int i = 0; i < count; i++) {
-                    final LogLine value = values.get(i);
+                    final LogLine value = allValues.get(i);
                     // search the logline based on the criteria
                     if (searchCriteria.matches(value)) {
                         newValues.add(value);

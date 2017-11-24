@@ -34,17 +34,16 @@ public class StringUtil {
      * same as the String.split(), except it doesn't use regexes, so it's faster.
      *
      * @param str       - the string to split up
-     * @param delimiter the delimiter
      * @return the split string
      */
-    public static String[] split(String str, String delimiter) {
-        List<String> result = new ArrayList<String>();
+    public static String[] split(String str) {
+        List<String> result = new ArrayList<>();
         int lastIndex = 0;
-        int index = str.indexOf(delimiter);
+        int index = str.indexOf(com.pluscubed.logcat.widget.MultipleChoicePreference.DELIMITER);
         while (index != -1) {
             result.add(str.substring(lastIndex, index));
-            lastIndex = index + delimiter.length();
-            index = str.indexOf(delimiter, index + delimiter.length());
+            lastIndex = index + com.pluscubed.logcat.widget.MultipleChoicePreference.DELIMITER.length();
+            index = str.indexOf(com.pluscubed.logcat.widget.MultipleChoicePreference.DELIMITER, index + com.pluscubed.logcat.widget.MultipleChoicePreference.DELIMITER.length());
         }
         result.add(str.substring(lastIndex, str.length()));
 
@@ -122,10 +121,8 @@ public class StringUtil {
             }
         }
 
-        int dist = distance[str1.length()][str2.length()];
 
-
-        return dist;
+        return distance[str1.length()][str2.length()];
     }
 
     private static int findCommonPrefixLength(CharSequence str1, CharSequence str2) {

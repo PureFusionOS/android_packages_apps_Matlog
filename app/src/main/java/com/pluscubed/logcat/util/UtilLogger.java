@@ -39,8 +39,8 @@ public class UtilLogger {
         Log.w(tag, String.format(format, more));
     }
 
-    public void e(String format, Object... more) {
-        Log.e(tag, String.format(format, more));
+    public void e(Object... more) {
+        Log.e(tag, String.format("file last modified date not found: %s", more));
     }
 
     public void e(Exception e, String format, Object... more) {

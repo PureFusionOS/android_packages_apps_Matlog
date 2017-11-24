@@ -138,7 +138,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
     private Handler mHandler;
     private MenuItem mSearchViewMenuItem;
 
-    public static void startChooser(Context context, String subject, String body, SendLogDetails.AttachmentType attachmentType, File attachment) {
+    private static void startChooser(Context context, String subject, String body, SendLogDetails.AttachmentType attachmentType, File attachment) {
 
         Intent actionSendIntent = new Intent(Intent.ACTION_SEND);
 
@@ -848,7 +848,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
         // show suggestions as the user types
         List<String> suggestions = new ArrayList<>(mSearchSuggestionsSet);
         SortedFilterArrayAdapter<String> suggestionAdapter = new SortedFilterArrayAdapter<>(
-                this, R.layout.list_item_dropdown, suggestions);
+                this, suggestions);
         editText.setAdapter(suggestionAdapter);
 
         final MaterialDialog alertDialog = new MaterialDialog.Builder(this)
@@ -889,7 +889,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
 
     }
 
-    protected void handleNewFilterText(String text, final FilterAdapter filterAdapter) {
+    private void handleNewFilterText(String text, final FilterAdapter filterAdapter) {
         final String trimmed = text.trim();
         if (!TextUtils.isEmpty(trimmed)) {
 
@@ -957,7 +957,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
 
                             if (checkBox.isChecked()) {
                                 // hide this help dialog in the future
-                                PreferenceHelper.setHidePartialSelectHelpPreference(LogcatActivity.this, true);
+                                PreferenceHelper.setHidePartialSelectHelpPreference(LogcatActivity.this);
                             }
                         }
                     })
@@ -1010,7 +1010,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                     DELETE_SAVED_LOG_REQUEST);
             return;
         }
-        if (!SaveLogHelper.checkSdCard(this)) {
+        if (SaveLogHelper.checkSdCard(this)) {
             return;
         }
 
@@ -1064,8 +1064,8 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
         });
     }
 
-    protected void verifyDelete(final CharSequence[] filenameArray,
-                                final boolean[] checkedItems, final DialogInterface parentDialog) {
+    private void verifyDelete(final CharSequence[] filenameArray,
+                              final boolean[] checkedItems, final DialogInterface parentDialog) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -1156,7 +1156,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                        sendLogToTargetApp(false, includeDeviceInfoCheckBox.isChecked(), includeDmesgCheckBox.isChecked());
+                        sendLogToTargetApp(includeDeviceInfoCheckBox.isChecked(), includeDmesgCheckBox.isChecked());
                         materialDialog.dismiss();
                     }
                 }).show();
@@ -1212,9 +1212,9 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                 }).show();
     }
 
-    protected void sendLogToTargetApp(final boolean asText, final boolean includeDeviceInfo, final boolean includeDmesg) {
+    private void sendLogToTargetApp(final boolean includeDeviceInfo, final boolean includeDmesg) {
 
-        if (!(mCurrentlyOpenLog == null && asText) && !SaveLogHelper.checkSdCard(this)) {
+        if (!(mCurrentlyOpenLog == null && false) && SaveLogHelper.checkSdCard(this)) {
             // if asText is false, then we need to check to make sure we can access the sdcard
             return;
         }
@@ -1228,7 +1228,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                 ui.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (asText || mCurrentlyOpenLog == null || includeDeviceInfo || includeDmesg) {
+                        if (false || mCurrentlyOpenLog == null || includeDeviceInfo || includeDmesg) {
                             MaterialDialog.Builder progressDialog = new MaterialDialog.Builder(LogcatActivity.this);
                             progressDialog.title(R.string.dialog_please_wait);
                             progressDialog.content(getString(R.string.dialog_compiling_log));
@@ -1239,7 +1239,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                         }
                     }
                 });
-                final SendLogDetails sendLogDetails = getSendLogDetails(asText, includeDeviceInfo, includeDmesg);
+                final SendLogDetails sendLogDetails = getSendLogDetails(false, includeDeviceInfo, includeDmesg);
                 ui.post(new Runnable() {
                     @Override
                     public void run() {
@@ -1248,7 +1248,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                         if (mDialog != null && mDialog.isShowing()) {
                             mDialog.dismiss();
                         }
-                        if (asText && sendLogDetails.getBody().length() > 100000) {
+                        if (false && sendLogDetails.getBody().length() > 100000) {
                             Snackbar.make(findViewById(android.R.id.content), getString(R.string.as_text_not_work), Snackbar.LENGTH_LONG).show();
                         }
                     }
@@ -1258,9 +1258,9 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
 
     }
 
-    protected void saveLogToTargetApp(final boolean includeDeviceInfo, final boolean includeDmesg) {
+    private void saveLogToTargetApp(final boolean includeDeviceInfo, final boolean includeDmesg) {
 
-        if (!SaveLogHelper.checkSdCard(this)) {
+        if (SaveLogHelper.checkSdCard(this)) {
             // if asText is false, then we need to check to make sure we can access the sdcard
             return;
         }
@@ -1355,7 +1355,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                 sendLogDetails.setAttachment(files.get(0));
                 break;
             default: // 2 files - need to zip them up
-                File zipFile = SaveLogHelper.saveTemporaryZipFile(SaveLogHelper.createLogFilename(true), files);
+                File zipFile = SaveLogHelper.saveTemporaryZipFile(SaveLogHelper.createLogFilename(), files);
 
                 sendLogDetails.setSubject(zipFile.getName());
                 sendLogDetails.setAttachmentType(SendLogDetails.AttachmentType.Zip);
@@ -1393,9 +1393,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
             files.add(tempDmsgFile);
         }
 
-        File zipFile = SaveLogHelper.saveZipFile(SaveLogHelper.createLogFilename(true), files);
-
-        return zipFile;
+        return SaveLogHelper.saveZipFile(SaveLogHelper.createLogFilename(), files);
     }
 
     private List<CharSequence> getCurrentLogAsListOfStrings() {
@@ -1428,7 +1426,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
             return;
         }
 
-        if (!SaveLogHelper.checkSdCard(this)) {
+        if (SaveLogHelper.checkSdCard(this)) {
             return;
         }
 
@@ -1444,7 +1442,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
             }
         };
 
-        DialogHelper.showFilenameSuggestingDialog(this, null, onClickListener, R.string.save_log);
+        DialogHelper.showFilenameSuggestingDialog(this, null, onClickListener);
     }
 
     private void savePartialLog(final String filename, LogLine first, LogLine last) {
@@ -1533,7 +1531,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                     OPEN_LOG_REQUEST);
             return;
         }
-        if (!SaveLogHelper.checkSdCard(this)) {
+        if (SaveLogHelper.checkSdCard(this)) {
             return;
         }
 
@@ -1647,7 +1645,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
 
     }
 
-    void hideProgressBar() {
+    private void hideProgressBar() {
         findViewById(R.id.main_dark_progress_bar).setVisibility(View.GONE);
         findViewById(R.id.main_light_progress_bar).setVisibility(View.GONE);
     }
@@ -1659,7 +1657,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
     }
 
 
-    public void resetDisplayedLog(String filename) {
+    private void resetDisplayedLog(String filename) {
         mLogListAdapter.clear();
         mCurrentlyOpenLog = filename;
         mCollapsedMode = !PreferenceHelper.getExpandedByDefaultPreference(getApplicationContext());
@@ -1756,7 +1754,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                     COMPLETE_PARTIAL_SELECT_REQUEST);
             return;
         }
-        if (!SaveLogHelper.checkSdCard(this)) {
+        if (SaveLogHelper.checkSdCard(this)) {
             cancelPartialSelect();
             return;
         }
@@ -1785,7 +1783,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
             }
         };
 
-        DialogHelper.showFilenameSuggestingDialog(this, onCancelListener, onClickListener, R.string.save_log);
+        DialogHelper.showFilenameSuggestingDialog(this, onCancelListener, onClickListener);
 
     }
 
@@ -1888,7 +1886,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
     }
 
     @SuppressLint("RestrictedApi")
-    public void invalidateDarkOrLightMenuItems(Context context, Menu menu) {
+    private void invalidateDarkOrLightMenuItems(Context context, Menu menu) {
         if (menu != null && menu instanceof MenuBuilder) {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
             /*final boolean darkMode = ThemeUtils.isDarkMode(context);
@@ -1940,7 +1938,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
             try {
                 // use "recordingMode" because we want to load all the existing lines at once
                 // for a performance boost
-                LogcatReaderLoader loader = LogcatReaderLoader.create(LogcatActivity.this, true);
+                LogcatReaderLoader loader = LogcatReaderLoader.create(LogcatActivity.this);
                 mReader = loader.loadReader();
 
                 int maxLines = PreferenceHelper.getDisplayLimitPreference(LogcatActivity.this);
@@ -1956,7 +1954,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
                         }
                     }
                     LogLine logLine = LogLine.newLogLine(line, !mCollapsedMode);
-                    if (!mReader.readyToRecord()) {
+                    if (mReader.readyToRecord()) {
                         // "ready to record" in this case means all the initial lines have been flushed from the reader
                         initialLines.add(logLine);
                         if (initialLines.size() > maxLines) {

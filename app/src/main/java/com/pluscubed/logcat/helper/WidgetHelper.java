@@ -48,7 +48,7 @@ public class WidgetHelper {
     }
 
 
-    public static void updateWidgets(Context context, int[] appWidgetIds, boolean serviceRunning) {
+    private static void updateWidgets(Context context, int[] appWidgetIds, boolean serviceRunning) {
 
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
 

@@ -20,7 +20,7 @@ import java.util.Set;
 public class MultipleChoicePreference extends ListPreference {
 
     public static final String DELIMITER = ",";
-    boolean[] checkedDialogEntryIndexes;
+    private boolean[] checkedDialogEntryIndexes;
 
     public MultipleChoicePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,7 +36,7 @@ public class MultipleChoicePreference extends ListPreference {
         // convert comma-separated list to boolean array
 
         String value = getValue();
-        Set<String> commaSeparated = new HashSet<String>(Arrays.asList(StringUtil.split(value, DELIMITER)));
+        Set<String> commaSeparated = new HashSet<>(Arrays.asList(StringUtil.split(value)));
 
         CharSequence[] entryValues = getEntryValues();
         final boolean[] checked = new boolean[entryValues.length];

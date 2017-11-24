@@ -32,7 +32,7 @@ public class LogcatReaderLoader implements Parcelable {
     private LogcatReaderLoader(Parcel in) {
         this.recordingMode = in.readInt() == 1;
         this.multiple = in.readInt() == 1;
-        Bundle bundle = in.readBundle();
+        Bundle bundle = in.readBundle(getClass().getClassLoader());
         for (String key : bundle.keySet()) {
             lastLines.put(key, bundle.getString(key));
         }
@@ -48,9 +48,9 @@ public class LogcatReaderLoader implements Parcelable {
         }
     }
 
-    public static LogcatReaderLoader create(Context context, boolean recordingMode) {
+    public static LogcatReaderLoader create(Context context) {
         List<String> buffers = PreferenceHelper.getBuffers(context);
-        return new LogcatReaderLoader(buffers, recordingMode);
+        return new LogcatReaderLoader(buffers, true);
     }
 
     public LogcatReader loadReader() throws IOException {

@@ -1,11 +1,11 @@
 package com.pluscubed.logcat.reader;
 
 
-public abstract class AbsLogcatReader implements LogcatReader {
+abstract class AbsLogcatReader implements LogcatReader {
 
-    protected boolean recordingMode;
+    boolean recordingMode;
 
-    public AbsLogcatReader(boolean recordingMode) {
+    AbsLogcatReader(boolean recordingMode) {
         this.recordingMode = recordingMode;
     }
 
