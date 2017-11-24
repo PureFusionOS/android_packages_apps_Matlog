@@ -18,10 +18,9 @@ repositories {
 
 android {
     compileSdkVersion 26
-
     defaultConfig {
         applicationId "org.omnirom.logcat"
-        minSdkVersion 16
+        minSdkVersion 25
         targetSdkVersion 26
         versionName '1.1.1'
         versionCode 6
@@ -33,7 +32,6 @@ android {
 
         vectorDrawables.useSupportLibrary = true
     }
-
     if (project.hasProperty("RELEASE_STORE_FILE")) {
         signingConfigs {
             release {
@@ -44,7 +42,6 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -63,6 +60,9 @@ android {
             ext.enableCrashlytics = false
         }
     }
+    buildToolsVersion '27.0.1'
+    productFlavors {
+    }
 }
 
 def supportLibrariesVersion = "26.0.0-beta2"
@@ -73,6 +73,5 @@ dependencies {
     compile "com.android.support:support-annotations:$supportLibrariesVersion"
     compile "com.android.support:design:$supportLibrariesVersion"
     compile "com.android.support:support-v13:$supportLibrariesVersion"
-
     compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
 }
