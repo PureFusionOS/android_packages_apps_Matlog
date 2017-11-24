@@ -842,8 +842,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
 
         // show a popup to add a new filter text
         LayoutInflater inflater = getLayoutInflater();
-        @SuppressLint("InflateParams")
-        final AutoCompleteTextView editText =
+        @SuppressLint("InflateParams") final AutoCompleteTextView editText =
                 (AutoCompleteTextView) inflater.inflate(R.layout.dialog_new_filter, null, false);
 
         // show suggestions as the user types
@@ -1258,6 +1257,7 @@ public class LogcatActivity extends AppCompatActivity implements FilterListener,
         }).start();
 
     }
+
     protected void saveLogToTargetApp(final boolean includeDeviceInfo, final boolean includeDmesg) {
 
         if (!SaveLogHelper.checkSdCard(this)) {

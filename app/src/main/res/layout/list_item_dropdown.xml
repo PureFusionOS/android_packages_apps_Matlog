@@ -24,8 +24,8 @@
     android:layout_height="48dp"
     android:ellipsize="marquee"
     android:gravity="center_vertical"
+    android:maxLines="1"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:textSize="16sp"
-    tools:text="TESTSDFSDFD"
-    android:maxLines="1" />
+    tools:text="TESTSDFSDFD" />

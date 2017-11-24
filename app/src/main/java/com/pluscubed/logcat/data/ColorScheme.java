@@ -87,21 +87,21 @@ public enum ColorScheme {
 
     public int getSelectedColor(Context context) {
         if (selectedColor == -1) {
-            selectedColor = ContextCompat.getColor(context,selectedColorResource);
+            selectedColor = ContextCompat.getColor(context, selectedColorResource);
         }
         return selectedColor;
     }
 
     public int getBackgroundColor(Context context) {
         if (backgroundColor == -1) {
-            backgroundColor = ContextCompat.getColor(context,backgroundColorResource);
+            backgroundColor = ContextCompat.getColor(context, backgroundColorResource);
         }
         return backgroundColor;
     }
 
     public int getForegroundColor(Context context) {
         if (foregroundColor == -1) {
-            foregroundColor = ContextCompat.getColor(context,foregroundColorResource);
+            foregroundColor = ContextCompat.getColor(context, foregroundColorResource);
         }
         return foregroundColor;
     }
@@ -115,14 +115,14 @@ public enum ColorScheme {
 
     public int getSpinnerColor(Context context) {
         if (spinnerColor == -1) {
-            spinnerColor = ContextCompat.getColor(context,spinnerColorResource);
+            spinnerColor = ContextCompat.getColor(context, spinnerColorResource);
         }
         return spinnerColor;
     }
 
     public int getBubbleBackgroundColor(Context context) {
         if (bubbleBackgroundColor == -1) {
-            bubbleBackgroundColor = ContextCompat.getColor(context,bubbleBackgroundColorResource);
+            bubbleBackgroundColor = ContextCompat.getColor(context, bubbleBackgroundColorResource);
         }
         return bubbleBackgroundColor;
     }

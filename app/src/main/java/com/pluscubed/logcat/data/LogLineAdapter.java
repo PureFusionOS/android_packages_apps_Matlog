@@ -291,7 +291,7 @@ public class LogLineAdapter extends RecyclerView.Adapter<LogLineViewHolder> impl
 
         int selectedBackground = logLine.isHighlighted()
                 ? PreferenceHelper.getColorScheme(context).getSelectedColor(context)
-                : ContextCompat.getColor(context,android.R.color.transparent);
+                : ContextCompat.getColor(context, android.R.color.transparent);
         holder.itemView.setBackgroundColor(selectedBackground);
     }
 

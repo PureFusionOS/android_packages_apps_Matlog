@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class LogLine {
 
     private static final int TIMESTAMP_LENGTH = 19;
-
+    public static boolean isScrubberEnabled = false;
     private static Pattern logPattern = Pattern.compile(
             // log level
             "(\\w)" +
@@ -27,9 +27,7 @@ public class LogLine {
                     // optional weird number that only occurs on ZTE blade
                     "(?:\\*\\s*\\d+)?" +
                     "\\): ");
-
     private static UtilLogger log = new UtilLogger(LogLine.class);
-
     private int logLevel;
     private String tag;
     private String logOutput;
@@ -37,8 +35,6 @@ public class LogLine {
     private String timestamp;
     private boolean expanded = false;
     private boolean highlighted = false;
-
-    public static boolean isScrubberEnabled = false;
 
     public static LogLine newLogLine(String originalLine, boolean expanded) {
 

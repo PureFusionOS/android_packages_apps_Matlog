@@ -180,7 +180,7 @@ public class SuperUserHelper {
 
     public static void requestRoot(final Context context) {
         // Don't request root when read logs permission is already granted
-        if(haveReadLogsPermission(context)) {
+        if (haveReadLogsPermission(context)) {
             failedToObtainRoot = true;
             return;
         }

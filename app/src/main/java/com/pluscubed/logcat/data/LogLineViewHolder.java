@@ -17,10 +17,8 @@ public class LogLineViewHolder extends RecyclerView.ViewHolder implements PopupM
     // id for context menu entry
     public static final int CONTEXT_MENU_FILTER_ID = 0;
     public static final int CONTEXT_MENU_COPY_ID = 1;
-
-    LogLine logLine;
-
     private final OnClickListener clickListener;
+    LogLine logLine;
 
     public LogLineViewHolder(View itemView, final OnClickListener clickListener) {
         super(itemView);
@@ -53,6 +51,7 @@ public class LogLineViewHolder extends RecyclerView.ViewHolder implements PopupM
 
     public interface OnClickListener {
         void onClick(View itemView, LogLine logLine);
+
         boolean onMenuItemClick(MenuItem item, LogLine logLine);
     }
 }

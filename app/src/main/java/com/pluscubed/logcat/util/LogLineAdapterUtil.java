@@ -38,7 +38,7 @@ public class LogLineAdapterUtil {
                 break;
         }
 
-        return ContextCompat.getColor(context,result);
+        return ContextCompat.getColor(context, result);
     }
 
     public static int getForegroundColorForLogLevel(Context context, int logLevel) {
@@ -63,7 +63,7 @@ public class LogLineAdapterUtil {
                 result = R.color.foreground_wtf;
                 break;
         }
-        return ContextCompat.getColor(context,result);
+        return ContextCompat.getColor(context, result);
     }
 
     public static synchronized int getOrCreateTagColor(Context context, String tag) {
