@@ -3,8 +3,9 @@ package com.pluscubed.logcat.data;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
-import org.omnirom.logcat.R;
 import com.pluscubed.logcat.util.ArrayUtil;
+
+import org.omnirom.logcat.R;
 
 import java.util.HashMap;
 import java.util.Map;

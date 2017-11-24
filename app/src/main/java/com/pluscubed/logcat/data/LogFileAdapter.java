@@ -10,8 +10,9 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import org.omnirom.logcat.R;
 import com.pluscubed.logcat.helper.SaveLogHelper;
+
+import org.omnirom.logcat.R;
 
 import java.text.DateFormat;
 import java.util.Date;
